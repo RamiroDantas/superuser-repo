@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate credentials
     if (empty($email_err) && empty($password_err)) {
         // Prepare a select statement
-        $sql = "SELECT atendente_id, atendente_name, atendente_email, password FROM atendente_users WHERE atendente_email = :email";
+        $sql = "SELECT superuser_id, email_super, password_super FROM superuser WHERE email_super = :email";
 
         if ($stmt = $pdo->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
@@ -45,9 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt->rowCount() == 1) {
                     // Fetch result
                     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $id = $row["atendente_id"];
-                        $fullname = $row["atendente_name"];
-                        $hashed_password = $row["password"];
+                        $id = $row["superuser_id"];
+                        $hashed_password = $row["password_super"];
 
                         if (password_verify($password, $hashed_password)) {
                             // Password is correct, so start a new session
@@ -55,10 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["user_id"] = $id;
-                            $_SESSION["role"] = $role;
-                            $_SESSION["fullname"] = $fullname;
-                            $_SESSION["email"] = $email;
+                            $_SESSION["superuser_id"] = $id;
+                            $_SESSION["email_super"] = $email;
 
                             // Redirect user to welcome page
                             header("location: register.php");
