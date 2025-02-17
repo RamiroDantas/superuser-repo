@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Oops! Algo deu errado. Por favor, tente novamente.";
       }
     }
+  } else {
+    header("location: ../register.php?Error=1");
   }
 
   // Fecha a conexão

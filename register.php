@@ -18,6 +18,11 @@
             width: 120px;
             height: auto;
         }
+
+        .Error-Email {
+            color: red;
+
+        }
     </style>
 </head>
 
@@ -31,6 +36,15 @@
             </div>
             <h3>Registrar no Controle de Clientes e Produtos</h3>
             <p>Crie uma nova conta para iniciar a sessão.</p>
+
+
+            <?php
+            if ($_GET['Error'] == 1) {
+                ?>
+                <span class="Error-Email">Erro ao criar conta. <br> Este email ja foi utilizado, insira outro!</span>
+                <?php
+
+            } ?>
             <form class="m-t" role="form" autocomplete="off" action="php/registerClient.php" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Name" required name="Name" required>
